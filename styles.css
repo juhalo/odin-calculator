@@ -2,7 +2,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: black;
+  background-color: darkgray;
   height: 100vh;
   margin: 0;
   padding: 0;
@@ -10,17 +10,30 @@ body {
 
 .container {
   background-color: white;
+  border: 3px solid;
+  border-radius: 5px;
 }
 
 .button-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  margin: 5px;
 }
 
 .btn {
-  padding: 10px;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+button:hover {
+  background-color: darkgray;
 }
 
 .screen {
   text-align: end;
+  margin: 10px;
+  border: 3px solid;
+  border-radius: 10px;
+  padding: 10px;
 }
