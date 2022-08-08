@@ -9,9 +9,19 @@ body {
 }
 
 .container {
-  background-color: white;
+  background-color: black;
   border: 3px solid;
   border-radius: 5px;
+}
+
+.screen {
+  text-align: end;
+  margin: 10px;
+  border: 3px solid;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 20px;
+  background-color: white;
 }
 
 .button-container {
@@ -21,19 +31,30 @@ body {
   margin: 5px;
 }
 
-.btn {
+.btn,
+#btn-plus-minus {
   padding: 20px;
   border-radius: 15px;
+  font-size: 20px;
+  background-color: greenyellow;
+}
+
+.btn-clear {
+  background-color: red;
+}
+
+.btn-del {
+  background-color: orange;
+}
+
+.btn-operate {
+  background-color: aqua;
+}
+
+.btn-equal {
+  background-color: aqua;
 }
 
 button:hover {
   background-color: darkgray;
-}
-
-.screen {
-  text-align: end;
-  margin: 10px;
-  border: 3px solid;
-  border-radius: 10px;
-  padding: 10px;
 }
