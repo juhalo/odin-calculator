@@ -1,6 +1,6 @@
 let operandOne;
 let operandTwo;
-let operator = '0';
+let operator = '';
 let decimalPoint;
 const screen = document.querySelector('.screen');
 
@@ -78,7 +78,10 @@ function clear() {
 }
 
 function operate(numOne, numTwo, functionName) {
-  return functionName(numOne, numTwo);
+  operandOne = functionName(numOne, numTwo);
+  operandTwo = null;
+  screen.textContent = operandOne;
+  return operandOne;
 }
 
 function main() {
@@ -87,17 +90,31 @@ function main() {
   screen.textContent = operandOne;
   const numButtons = document.querySelectorAll('.btn-number');
   numButtons.forEach((button) => button.addEventListener('click', clickNumBtn));
+  const operatorButtons = document.querySelectorAll('.btn-operate');
+  operatorButtons.forEach((button) =>
+    button.addEventListener('click', clickOperatorBtn)
+  );
 }
 
 function clickNumBtn(e) {
   if (!operator) {
-    operandOne = +screen.textContent; // '+' to remove whitespace
     operandOne += e.target.textContent;
     operandOne = +operandOne; // '+' to remove '0' if first character
     screen.textContent = operandOne;
   } else {
     operandTwo += e.target.textContent;
+    operandTwo = +operandTwo;
     screen.textContent = operandTwo;
+  }
+}
+
+function clickOperatorBtn(e) {
+  // Calculators allow to change the operator, i.e. '5 - + 5 = 10'
+  if (!operandTwo) {
+    // Global scope for function => using property accessor 'window'
+    operator = window[e.target.id];
+  } else {
+    console.log(operate(operandOne, operandTwo, operator));
   }
 }
 
