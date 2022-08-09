@@ -2,6 +2,7 @@ let operandOne;
 let operandTwo;
 let operator = '';
 let decimalPoint;
+let calculationAgain;
 const screen = document.querySelector('.screen');
 
 function add(a, b) {
@@ -79,17 +80,30 @@ function clear() {
 
 function operate() {
   if (!operator) {
-    console.log('Ji!');
-    return;
+    return; // Fixes issues when pressing '=' as first pressed operator
   }
-  if (!operandTwo) {
+  if (calculationAgain) {
+    operandTwo = calculationAgain;
+  } else if (!operandTwo) {
     operandTwo = operandOne;
   }
   operandOne = +operator(operandOne, operandTwo);
+  /*
+  calculationAgain makes sure that after entering the equals-to sign the
+  logic when either pressing equals-to sign again, or pressing a number,
+  is correct. When pressing a number we want to 'start over' with that
+  number being the operandOne, and when pressing '=' again straight away
+  we want to preform the same operation with the previous operandTwo.
+  */
+  if (operandTwo) {
+    calculationAgain = operandTwo;
+  }
   operandTwo = '';
   screen.textContent = operandOne;
-  console.log(operandOne);
-  return operandOne;
+  if (calculationAgain) {
+    console.log(operandOne);
+  }
+  console.log('Hi');
 }
 
 function main() {
@@ -106,6 +120,11 @@ function main() {
 }
 
 function clickNumBtn(e) {
+  if (calculationAgain) {
+    operator = '';
+    operandOne = 0;
+    calculationAgain = false;
+  }
   if (!operator) {
     operandOne += e.target.textContent;
     operandOne = +operandOne; // '+' to remove '0' if first character
@@ -118,6 +137,9 @@ function clickNumBtn(e) {
 }
 
 function clickOperatorBtn(e) {
+  if (calculationAgain) {
+    calculationAgain = false;
+  }
   // Calculators allow to change the operator, i.e. '5 - + 5 = 10'
   if (!operandTwo) {
     // Global scope for function => using property accessor 'window'
@@ -129,4 +151,3 @@ function clickOperatorBtn(e) {
 }
 
 main();
-// operate('', '', clear);
