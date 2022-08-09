@@ -79,8 +79,9 @@ function clear() {
 
 function operate(numOne, numTwo, functionName) {
   operandOne = functionName(numOne, numTwo);
-  operandTwo = null;
+  operandTwo = '';
   screen.textContent = operandOne;
+  console.log(operandOne);
   return operandOne;
 }
 
@@ -114,7 +115,8 @@ function clickOperatorBtn(e) {
     // Global scope for function => using property accessor 'window'
     operator = window[e.target.id];
   } else {
-    console.log(operate(operandOne, operandTwo, operator));
+    operate(operandOne, operandTwo, operator);
+    operator = window[e.target.id];
   }
 }
 
