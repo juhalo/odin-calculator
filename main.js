@@ -82,6 +82,9 @@ function operate() {
     console.log('Ji!');
     return;
   }
+  if (!operandTwo) {
+    operandTwo = operandOne;
+  }
   operandOne = +operator(operandOne, operandTwo);
   operandTwo = '';
   screen.textContent = operandOne;
