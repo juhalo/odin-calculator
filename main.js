@@ -72,13 +72,17 @@ function delNum(a, b) {
 
 function clear() {
   operandOne = 0;
-  operandTwo = null;
+  operandTwo = '';
   operator = null;
   screen.textContent = operandOne;
 }
 
-function operate(numOne, numTwo, functionName) {
-  operandOne = functionName(numOne, numTwo);
+function operate() {
+  if (!operator) {
+    console.log('Ji!');
+    return;
+  }
+  operandOne = +operator(operandOne, operandTwo);
   operandTwo = '';
   screen.textContent = operandOne;
   console.log(operandOne);
@@ -95,6 +99,7 @@ function main() {
   operatorButtons.forEach((button) =>
     button.addEventListener('click', clickOperatorBtn)
   );
+  document.querySelector('.btn-equal').addEventListener('click', operate);
 }
 
 function clickNumBtn(e) {
@@ -115,7 +120,7 @@ function clickOperatorBtn(e) {
     // Global scope for function => using property accessor 'window'
     operator = window[e.target.id];
   } else {
-    operate(operandOne, operandTwo, operator);
+    operate();
     operator = window[e.target.id];
   }
 }
