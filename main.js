@@ -6,7 +6,7 @@ let calculationAgain;
 const screen = document.querySelector('.screen');
 
 function add(a, b) {
-  return a + b;
+  return +a + +b;
 }
 
 function subtract(a, b) {
@@ -68,14 +68,18 @@ function delNum() {
     operandOne = operandOne.slice(0, -1);
     if (!operandOne) {
       operandOne = 0;
-    }
+    } //else if (operandOne[length - 1] !== '.') {
+    //operandOne = +operandOne;
+    //}
     screen.textContent = operandOne;
   } else {
     operandTwo = operandTwo.toString();
     operandTwo = operandTwo.slice(0, -1);
     if (!operandTwo) {
       operandTwo = 0;
-    }
+    } //else if (operandTwo[length - 1] !== '.') {
+    //operandTwo = +operandTwo;
+    //}
     screen.textContent = operandTwo;
   }
 }
