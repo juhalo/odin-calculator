@@ -25,17 +25,17 @@ function plusMinus(a) {
   return -a;
 }
 
-function calcPercent(a, b) {
+function calcPercent() {
   if (!operator) {
-    a /= 100;
-    screen.textContent = a;
+    operandOne /= 100;
+    screen.textContent = operandOne;
   } else {
-    if (!b) {
-      b = a;
+    if (!operandTwo) {
+      operandTwo = operandOne;
     }
-    b *= a;
-    b /= 100;
-    screen.textContent = b;
+    operandTwo *= operandOne;
+    operandTwo /= 100;
+    screen.textContent = operandTwo;
   }
 }
 
@@ -115,6 +115,7 @@ function main() {
   );
   document.querySelector('.btn-equal').addEventListener('click', operate);
   document.querySelector('.btn-clear').addEventListener('click', clear);
+  document.querySelector('#btn-percent').addEventListener('click', calcPercent);
 }
 
 function clickNumBtn(e) {
