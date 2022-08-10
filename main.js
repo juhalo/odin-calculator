@@ -21,8 +21,14 @@ function divide(a, b) {
   return a / b;
 }
 
-function plusMinus(a) {
-  return -a;
+function plusMinus() {
+  if (operandTwo) {
+    operandTwo = -operandTwo;
+    screen.textContent = operandTwo;
+  } else {
+    operandOne = -operandOne;
+    screen.textContent = operandOne;
+  }
 }
 
 function calcPercent() {
@@ -116,6 +122,9 @@ function main() {
   document.querySelector('.btn-equal').addEventListener('click', operate);
   document.querySelector('.btn-clear').addEventListener('click', clear);
   document.querySelector('#btn-percent').addEventListener('click', calcPercent);
+  document
+    .querySelector('#btn-plus-minus')
+    .addEventListener('click', plusMinus);
 }
 
 function clickNumBtn(e) {
