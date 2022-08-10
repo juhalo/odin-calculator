@@ -1,7 +1,6 @@
 let operandOne;
 let operandTwo;
 let operator = '';
-let decimalPoint;
 let calculationAgain;
 const screen = document.querySelector('.screen');
 
@@ -48,13 +47,13 @@ function calcPercent() {
 function addDecimal() {
   if (!operandTwo && !operator) {
     operandOne += '';
-    if (operandOne.indexOf('.') === -1) {
+    if (operandOne.indexOf('.') === -1 && `${operandOne}`.length < 16) {
       operandOne += '.';
       screen.textContent = operandOne;
     }
   } else {
     operandTwo += '';
-    if (operandTwo.indexOf('.') === -1) {
+    if (operandTwo.indexOf('.') === -1 && `${operandTwo}`.length < 16) {
       operandTwo += '.';
       screen.textContent = operandTwo;
     }
@@ -107,7 +106,7 @@ function operate() {
     return;
   }
   operandOne = operator(operandOne, operandTwo);
-  if (+operandOne >= 10 ** 18) {
+  if (+operandOne >= 10 ** 16) {
     raiseError('OVERFLOW');
     return;
   }
@@ -174,17 +173,22 @@ function clickNumBtn(e) {
     calculationAgain = false;
   }
   if (!operator) {
-    operandOne += e.target.textContent;
-    if (operandOne.indexOf('0') === 0 && operandOne.indexOf('.') !== 1) {
-      operandOne = +operandOne; // removes '0' if first character
+    if (`${operandOne}`.length < 16) {
+      operandOne += e.target.textContent;
+      console.log(operandOne);
+      if (operandOne.indexOf('0') === 0 && operandOne.indexOf('.') !== 1) {
+        operandOne = +operandOne; // removes '0' if first character
+      }
+      screen.textContent = operandOne;
     }
-    screen.textContent = operandOne;
   } else {
-    operandTwo += e.target.textContent;
-    if (operandTwo.indexOf('0') === 0 && operandTwo.indexOf('.') !== 1) {
-      operandTwo = +operandTwo;
+    if (`${operandTwo}`.length < 16) {
+      operandTwo += e.target.textContent;
+      if (operandTwo.indexOf('0') === 0 && operandTwo.indexOf('.') !== 1) {
+        operandTwo = +operandTwo;
+      }
+      screen.textContent = operandTwo;
     }
-    screen.textContent = operandTwo;
   }
 }
 
