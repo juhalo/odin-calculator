@@ -45,16 +45,18 @@ function calcPercent() {
   }
 }
 
-function addDecimal(a, b) {
-  if (!b) {
-    if (typeof a === 'number') {
-      a += '.';
-      screen.textContent = a;
+function addDecimal() {
+  if (!operandTwo && operandTwo !== 0) {
+    operandOne += '';
+    if (operandOne.indexOf('.') === -1) {
+      operandOne += '.';
+      screen.textContent = operandOne;
     }
   } else {
-    if (typeof b === 'number') {
-      b += '.';
-      screen.textContent = b;
+    operandTwo += '';
+    if (operandTwo.indexOf('.') === -1) {
+      operandTwo += '.';
+      screen.textContent = operandTwo;
     }
   }
 }
@@ -133,6 +135,7 @@ function main() {
     .querySelector('#btn-plus-minus')
     .addEventListener('click', plusMinus);
   document.querySelector('.btn-del').addEventListener('click', delNum);
+  document.querySelector('#btn-decimal').addEventListener('click', addDecimal);
 }
 
 function clickNumBtn(e) {
