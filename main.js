@@ -59,21 +59,24 @@ function addDecimal(a, b) {
   }
 }
 
-function delNum(a, b) {
-  if (!b) {
-    a = a.toString();
-    a = a.slice(0, -1);
-    if (!a) {
-      a = 0;
+function delNum() {
+  if (calculationAgain) {
+    return;
+  }
+  if (!operandTwo) {
+    operandOne = operandOne.toString();
+    operandOne = operandOne.slice(0, -1);
+    if (!operandOne) {
+      operandOne = 0;
     }
-    screen.textContent = a;
+    screen.textContent = operandOne;
   } else {
-    b = b.toString();
-    b = b.slice(0, -1);
-    if (!b) {
-      b = 0;
+    operandTwo = operandTwo.toString();
+    operandTwo = operandTwo.slice(0, -1);
+    if (!operandTwo) {
+      operandTwo = 0;
     }
-    screen.textContent = b;
+    screen.textContent = operandTwo;
   }
 }
 
@@ -125,6 +128,7 @@ function main() {
   document
     .querySelector('#btn-plus-minus')
     .addEventListener('click', plusMinus);
+  document.querySelector('.btn-del').addEventListener('click', delNum);
 }
 
 function clickNumBtn(e) {
