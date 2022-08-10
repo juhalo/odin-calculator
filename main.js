@@ -46,7 +46,7 @@ function calcPercent() {
 }
 
 function addDecimal() {
-  if (!operandTwo && operandTwo !== 0) {
+  if (!operandTwo && !operator) {
     operandOne += '';
     if (operandOne.indexOf('.') === -1) {
       operandOne += '.';
@@ -102,7 +102,28 @@ function operate() {
   } else if (!operandTwo && operandTwo !== 0) {
     operandTwo = operandOne;
   }
-  operandOne = +operator(operandOne, operandTwo);
+  if (operator == divide && +operandTwo == 0) {
+    raiseError('DIVIDE BY ZERO');
+    return;
+  }
+  operandOne = operator(operandOne, operandTwo);
+  if (+operandOne >= 10 ** 18) {
+    raiseError('OVERFLOW');
+    return;
+  }
+  let programmersLittleHelper = `${operandOne}`.split('.');
+  console.log(programmersLittleHelper);
+  let helperTwo = programmersLittleHelper[0].length;
+  if (helperTwo > 9) {
+    let helperThree = 16 - helperTwo;
+    operandOne *= 10 ** helperThree;
+    operandOne = Math.round(operandOne);
+    operandOne /= 10 ** helperThree;
+  } else {
+    operandOne *= 10 ** 7;
+    operandOne = Math.round(operandOne);
+    operandOne /= 10 ** 7;
+  }
   /*
   calculationAgain makes sure that after entering the equals-to sign the
   logic when either pressing equals-to sign again, or pressing a number,
@@ -116,6 +137,14 @@ function operate() {
   operandTwo = '';
   screen.textContent = operandOne;
   console.log(operandOne);
+}
+
+function raiseError(errorMessage) {
+  screen.textContent = errorMessage;
+  operandOne = 0;
+  operandTwo = '';
+  operator = '';
+  calculationAgain = false;
 }
 
 function main() {
@@ -146,11 +175,15 @@ function clickNumBtn(e) {
   }
   if (!operator) {
     operandOne += e.target.textContent;
-    operandOne = +operandOne; // '+' to remove '0' if first character
+    if (operandOne.indexOf('0') === 0 && operandOne.indexOf('.') !== 1) {
+      operandOne = +operandOne; // removes '0' if first character
+    }
     screen.textContent = operandOne;
   } else {
     operandTwo += e.target.textContent;
-    operandTwo = +operandTwo;
+    if (operandTwo.indexOf('0') === 0 && operandTwo.indexOf('.') !== 1) {
+      operandTwo = +operandTwo;
+    }
     screen.textContent = operandTwo;
   }
 }
