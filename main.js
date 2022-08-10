@@ -63,7 +63,7 @@ function delNum() {
   if (calculationAgain) {
     return;
   }
-  if (!operandTwo) {
+  if (!operandTwo && !operator) {
     operandOne = operandOne.toString();
     operandOne = operandOne.slice(0, -1);
     if (!operandOne) {
@@ -93,7 +93,7 @@ function operate() {
   }
   if (calculationAgain) {
     operandTwo = calculationAgain;
-  } else if (!operandTwo) {
+  } else if (!operandTwo && operandTwo !== 0) {
     operandTwo = operandOne;
   }
   operandOne = +operator(operandOne, operandTwo);
