@@ -100,9 +100,6 @@ function operate() {
   }
   operandTwo = '';
   screen.textContent = operandOne;
-  if (calculationAgain) {
-    console.log(operandOne);
-  }
   console.log('Hi');
 }
 
@@ -147,6 +144,8 @@ function clickOperatorBtn(e) {
   } else {
     operate();
     operator = window[e.target.id];
+    // operate function changes calculationAgain to be truthy, which breaks '3+3+3+...'
+    calculationAgain = false;
   }
 }
 
