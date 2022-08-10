@@ -74,7 +74,7 @@ function delNum(a, b) {
 function clear() {
   operandOne = 0;
   operandTwo = '';
-  operator = null;
+  operator = '';
   screen.textContent = operandOne;
 }
 
@@ -100,7 +100,7 @@ function operate() {
   }
   operandTwo = '';
   screen.textContent = operandOne;
-  console.log('Hi');
+  console.log(operandOne);
 }
 
 function main() {
@@ -114,6 +114,7 @@ function main() {
     button.addEventListener('click', clickOperatorBtn)
   );
   document.querySelector('.btn-equal').addEventListener('click', operate);
+  document.querySelector('.btn-clear').addEventListener('click', clear);
 }
 
 function clickNumBtn(e) {
