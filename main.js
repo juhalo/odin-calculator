@@ -156,13 +156,13 @@ function main() {
   operatorButtons.forEach((button) =>
     button.addEventListener('click', clickOperatorBtn)
   );
-  document.querySelector('.btn-equal').addEventListener('click', operate);
+  document.querySelector('#btn-equal').addEventListener('click', operate);
   document.querySelector('.btn-clear').addEventListener('click', clear);
   document.querySelector('#btn-percent').addEventListener('click', calcPercent);
   document
     .querySelector('#btn-plus-minus')
     .addEventListener('click', plusMinus);
-  document.querySelector('.btn-del').addEventListener('click', delNum);
+  document.querySelector('#btn-del').addEventListener('click', delNum);
   document.querySelector('#btn-decimal').addEventListener('click', addDecimal);
   window.addEventListener('keydown', pressButton);
 }
@@ -218,10 +218,28 @@ function clickOperatorBtn(e) {
 }
 
 function pressButton(e) {
-  let correctNumbers = '0123456789';
-  if (correctNumbers.includes(e.key)) {
-    clickNumBtn(e);
-  }
+  const buttons = document.querySelectorAll('.btn');
+  buttons.forEach(function (button) {
+    button.classList.remove('active');
+    if (e.key == button.textContent) {
+      button.click();
+      if (e.key == '+') {
+        button.classList.add('active');
+      }
+    } else if (
+      (e.key == '/' && button.id == 'divide') ||
+      (e.key == '-' && button.id == 'subtract') ||
+      (e.key == '*' && button.id == 'multiply')
+    ) {
+      button.click();
+      button.classList.add('active');
+    } else if (
+      (e.key == 'Backspace' && button.id == 'btn-del') ||
+      (e.key == 'Enter' && button.id == 'btn-equal')
+    ) {
+      button.click();
+    }
+  });
 }
 
 main();
