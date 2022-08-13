@@ -164,6 +164,7 @@ function main() {
     .addEventListener('click', plusMinus);
   document.querySelector('.btn-del').addEventListener('click', delNum);
   document.querySelector('#btn-decimal').addEventListener('click', addDecimal);
+  window.addEventListener('keydown', pressButton);
 }
 
 function clickNumBtn(e) {
@@ -174,7 +175,11 @@ function clickNumBtn(e) {
   }
   if (!operator) {
     if (`${operandOne}`.length < 16) {
-      operandOne += e.target.textContent;
+      if (e.key) {
+        operandOne += e.key;
+      } else {
+        operandOne += e.target.textContent;
+      }
       console.log(operandOne);
       if (operandOne.indexOf('0') === 0 && operandOne.indexOf('.') !== 1) {
         operandOne = +operandOne; // removes '0' if first character
@@ -183,7 +188,11 @@ function clickNumBtn(e) {
     }
   } else {
     if (`${operandTwo}`.length < 16) {
-      operandTwo += e.target.textContent;
+      if (e.key) {
+        operandTwo += e.key;
+      } else {
+        operandTwo += e.target.textContent;
+      }
       if (operandTwo.indexOf('0') === 0 && operandTwo.indexOf('.') !== 1) {
         operandTwo = +operandTwo;
       }
@@ -205,6 +214,13 @@ function clickOperatorBtn(e) {
     operator = window[e.target.id];
     // operate function changes calculationAgain to be truthy, which breaks '3+3+3+...'
     calculationAgain = false;
+  }
+}
+
+function pressButton(e) {
+  let correctNumbers = '0123456789';
+  if (correctNumbers.includes(e.key)) {
+    clickNumBtn(e);
   }
 }
 
