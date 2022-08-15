@@ -173,6 +173,7 @@ function clickNumBtn(e) {
     operator = '';
     operandOne = 0;
     calculationAgain = false;
+    console.log('176');
   }
   if (!operator) {
     if (`${operandOne}`.length < 16) {
@@ -181,11 +182,13 @@ function clickNumBtn(e) {
       } else {
         operandOne += e.target.textContent;
       }
-      console.log(operandOne);
+      console.log('185: ' + operandOne);
       if (operandOne.indexOf('0') === 0 && operandOne.indexOf('.') !== 1) {
         operandOne = +operandOne; // removes '0' if first character
       }
       operandOne = roundDown(operandOne);
+
+      console.log('190: ' + operandOne);
       screen.textContent = operandOne;
     }
   } else {
@@ -264,7 +267,16 @@ function roundNumber(number) {
 function roundDown(number) {
   let programmersLittleHelper = `${number}`.split('.');
   let helperTwo = programmersLittleHelper[0].length;
-  if (helperTwo > 9) {
+  if (+programmersLittleHelper[1] == 0) {
+    if (helperTwo > 9) {
+      let helperThree = 16 - helperTwo;
+      if (programmersLittleHelper[1].length > helperThree) {
+        number = programmersLittleHelper[0] + '.' + '0'.repeat(helperThree);
+      }
+    } else if (programmersLittleHelper[1].length > 7) {
+      number = programmersLittleHelper[0] + '.' + '0'.repeat(7);
+    }
+  } else if (helperTwo > 9) {
     let helperThree = 16 - helperTwo;
     number *= 10 ** helperThree;
     number = Math.floor(number);
