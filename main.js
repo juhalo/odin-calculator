@@ -96,6 +96,7 @@ function clear() {
 
 function operate() {
   if (!operator) {
+    console.log(operandOne);
     return; // Fixes issues when pressing '=' as first pressed operator
   }
   if (calculationAgain) {
@@ -174,6 +175,7 @@ function clickNumBtn(e) {
       if (operandOne.indexOf('0') === 0 && operandOne.indexOf('.') !== 1) {
         operandOne = +operandOne; // removes '0' if first character
       }
+      operandOne = roundDown(operandOne);
       screen.textContent = operandOne;
     }
   } else {
@@ -186,6 +188,7 @@ function clickNumBtn(e) {
       if (operandTwo.indexOf('0') === 0 && operandTwo.indexOf('.') !== 1) {
         operandTwo = +operandTwo;
       }
+      operandTwo = roundDown(operandTwo);
       screen.textContent = operandTwo;
     }
   }
@@ -243,6 +246,22 @@ function roundNumber(number) {
   } else {
     number *= 10 ** 7;
     number = Math.round(number);
+    number /= 10 ** 7;
+  }
+  return number;
+}
+
+function roundDown(number) {
+  let programmersLittleHelper = `${number}`.split('.');
+  let helperTwo = programmersLittleHelper[0].length;
+  if (helperTwo > 9) {
+    let helperThree = 16 - helperTwo;
+    number *= 10 ** helperThree;
+    number = Math.floor(number);
+    number /= 10 ** helperThree;
+  } else {
+    number *= 10 ** 7;
+    number = Math.floor(number);
     number /= 10 ** 7;
   }
   return number;
