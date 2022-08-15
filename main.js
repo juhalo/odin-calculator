@@ -33,6 +33,19 @@ function plusMinus() {
 function calcPercent() {
   if (!operator) {
     operandOne /= 100;
+    let programmersLittleHelper = `${operandOne}`.split('.');
+    console.log(programmersLittleHelper);
+    let helperTwo = programmersLittleHelper[0].length;
+    if (helperTwo > 9) {
+      let helperThree = 16 - helperTwo;
+      operandOne *= 10 ** helperThree;
+      operandOne = Math.round(operandOne);
+      operandOne /= 10 ** helperThree;
+    } else {
+      operandOne *= 10 ** 7;
+      operandOne = Math.round(operandOne);
+      operandOne /= 10 ** 7;
+    }
     screen.textContent = operandOne;
   } else {
     if (!operandTwo) {
@@ -40,6 +53,19 @@ function calcPercent() {
     }
     operandTwo *= operandOne;
     operandTwo /= 100;
+    let programmersLittleHelper = `${operandTwo}`.split('.');
+    console.log(programmersLittleHelper);
+    let helperTwo = programmersLittleHelper[0].length;
+    if (helperTwo > 9) {
+      let helperThree = 16 - helperTwo;
+      operandTwo *= 10 ** helperThree;
+      operandTwo = Math.round(operandTwo);
+      operandTwo /= 10 ** helperThree;
+    } else {
+      operandTwo *= 10 ** 7;
+      operandTwo = Math.round(operandTwo);
+      operandTwo /= 10 ** 7;
+    }
     screen.textContent = operandTwo;
   }
 }
