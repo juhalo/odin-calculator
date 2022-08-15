@@ -33,7 +33,7 @@ function plusMinus() {
 function calcPercent() {
   if (!operator) {
     operandOne /= 100;
-    operandOne = roundNumber(operandOne);
+    operandOne = roundDown(operandOne);
     screen.textContent = operandOne;
   } else {
     if (!operandTwo) {
@@ -41,7 +41,7 @@ function calcPercent() {
     }
     operandTwo *= operandOne;
     operandTwo /= 100;
-    operandTwo = roundNumber(operandTwo);
+    operandTwo = roundDown(operandTwo);
     screen.textContent = operandTwo;
   }
 }
@@ -118,7 +118,7 @@ function operate() {
     raiseError('OVERFLOW');
     return;
   }
-  operandOne = roundNumber(operandOne);
+  operandOne = roundDown(operandOne);
   /*
   calculationAgain makes sure that after entering the equals-to sign the
   logic when either pressing equals-to sign again, or pressing a number,
@@ -136,7 +136,7 @@ function operate() {
     operandOne = '0.000000' + operandOne[0];
   }
   screen.textContent = operandOne;
-  console.log('134: ' + operandOne);
+  console.log(operandOne);
 }
 
 function raiseError(errorMessage) {
@@ -186,7 +186,10 @@ function clickNumBtn(e) {
       if (operandOne.indexOf('0') === 0 && operandOne.indexOf('.') !== 1) {
         operandOne = +operandOne; // removes '0' if first character
       }
-      operandOne = roundDown(operandOne);
+      operandOne = '' + roundDown(operandOne, true);
+      if (operandOne.includes('e')) {
+        operandOne = '0.000000' + operandOne[0];
+      }
 
       console.log('190: ' + operandOne);
       screen.textContent = operandOne;
@@ -201,7 +204,10 @@ function clickNumBtn(e) {
       if (operandTwo.indexOf('0') === 0 && operandTwo.indexOf('.') !== 1) {
         operandTwo = +operandTwo;
       }
-      operandTwo = roundDown(operandTwo);
+      operandTwo = '' + roundDown(operandTwo, true);
+      if (operandTwo.includes('e')) {
+        operandTwo = '0.000000' + operandTwo[0];
+      }
       screen.textContent = operandTwo;
     }
   }
@@ -248,26 +254,15 @@ function pressButton(e) {
   });
 }
 
-function roundNumber(number) {
+function roundDown(number, numBtnOrNot) {
+  /*
+  numBtnOrNot allows to type 0.0001 without calculator forcing it to be
+  '0' while allowing 10.0000/10 be '1' and not 1.0000 AND do all
+  rounding in one function.
+  */
   let programmersLittleHelper = `${number}`.split('.');
   let helperTwo = programmersLittleHelper[0].length;
-  if (helperTwo > 9) {
-    let helperThree = 16 - helperTwo;
-    number *= 10 ** helperThree;
-    number = Math.round(number);
-    number /= 10 ** helperThree;
-  } else {
-    number *= 10 ** 7;
-    number = Math.round(number);
-    number /= 10 ** 7;
-  }
-  return number;
-}
-
-function roundDown(number) {
-  let programmersLittleHelper = `${number}`.split('.');
-  let helperTwo = programmersLittleHelper[0].length;
-  if (+programmersLittleHelper[1] == 0) {
+  if (numBtnOrNot && +programmersLittleHelper[1] == 0) {
     if (helperTwo > 9) {
       let helperThree = 16 - helperTwo;
       if (programmersLittleHelper[1].length > helperThree) {
