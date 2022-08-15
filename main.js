@@ -33,19 +33,7 @@ function plusMinus() {
 function calcPercent() {
   if (!operator) {
     operandOne /= 100;
-    let programmersLittleHelper = `${operandOne}`.split('.');
-    console.log(programmersLittleHelper);
-    let helperTwo = programmersLittleHelper[0].length;
-    if (helperTwo > 9) {
-      let helperThree = 16 - helperTwo;
-      operandOne *= 10 ** helperThree;
-      operandOne = Math.round(operandOne);
-      operandOne /= 10 ** helperThree;
-    } else {
-      operandOne *= 10 ** 7;
-      operandOne = Math.round(operandOne);
-      operandOne /= 10 ** 7;
-    }
+    operandOne = roundNumber(operandOne);
     screen.textContent = operandOne;
   } else {
     if (!operandTwo) {
@@ -53,19 +41,7 @@ function calcPercent() {
     }
     operandTwo *= operandOne;
     operandTwo /= 100;
-    let programmersLittleHelper = `${operandTwo}`.split('.');
-    console.log(programmersLittleHelper);
-    let helperTwo = programmersLittleHelper[0].length;
-    if (helperTwo > 9) {
-      let helperThree = 16 - helperTwo;
-      operandTwo *= 10 ** helperThree;
-      operandTwo = Math.round(operandTwo);
-      operandTwo /= 10 ** helperThree;
-    } else {
-      operandTwo *= 10 ** 7;
-      operandTwo = Math.round(operandTwo);
-      operandTwo /= 10 ** 7;
-    }
+    operandTwo = roundNumber(operandTwo);
     screen.textContent = operandTwo;
   }
 }
@@ -136,19 +112,7 @@ function operate() {
     raiseError('OVERFLOW');
     return;
   }
-  let programmersLittleHelper = `${operandOne}`.split('.');
-  console.log(programmersLittleHelper);
-  let helperTwo = programmersLittleHelper[0].length;
-  if (helperTwo > 9) {
-    let helperThree = 16 - helperTwo;
-    operandOne *= 10 ** helperThree;
-    operandOne = Math.round(operandOne);
-    operandOne /= 10 ** helperThree;
-  } else {
-    operandOne *= 10 ** 7;
-    operandOne = Math.round(operandOne);
-    operandOne /= 10 ** 7;
-  }
+  operandOne = roundNumber(operandOne);
   /*
   calculationAgain makes sure that after entering the equals-to sign the
   logic when either pressing equals-to sign again, or pressing a number,
@@ -266,6 +230,22 @@ function pressButton(e) {
       button.click();
     }
   });
+}
+
+function roundNumber(number) {
+  let programmersLittleHelper = `${number}`.split('.');
+  let helperTwo = programmersLittleHelper[0].length;
+  if (helperTwo > 9) {
+    let helperThree = 16 - helperTwo;
+    number *= 10 ** helperThree;
+    number = Math.round(number);
+    number /= 10 ** helperThree;
+  } else {
+    number *= 10 ** 7;
+    number = Math.round(number);
+    number /= 10 ** 7;
+  }
+  return number;
 }
 
 main();
