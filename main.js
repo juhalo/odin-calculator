@@ -47,6 +47,11 @@ function calcPercent() {
 }
 
 function addDecimal() {
+  if (calculationAgain) {
+    calculationAgain = false;
+    operandOne = '0';
+    operator = '';
+  }
   if (!operandTwo && !operator) {
     operandOne += '';
     if (operandOne.indexOf('.') === -1 && `${operandOne}`.length < 16) {
@@ -96,7 +101,7 @@ function clear() {
 
 function operate() {
   if (!operator) {
-    console.log(operandOne);
+    console.log('105: ' + operandOne);
     return; // Fixes issues when pressing '=' as first pressed operator
   }
   if (calculationAgain) {
@@ -125,8 +130,13 @@ function operate() {
     calculationAgain = operandTwo;
   }
   operandTwo = '';
+  operandOne = '' + operandOne;
+  if (operandOne.includes('e')) {
+    console.log(operandOne);
+    operandOne = '0.000000' + operandOne[0];
+  }
   screen.textContent = operandOne;
-  console.log(operandOne);
+  console.log('134: ' + operandOne);
 }
 
 function raiseError(errorMessage) {
