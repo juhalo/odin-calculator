@@ -261,6 +261,12 @@ function roundDown(number, numBtnOrNot) {
   rounding in one function.
   */
   let programmersLittleHelper = `${number}`.split('.');
+  if (programmersLittleHelper[0] === '9999999999999999') {
+    /*
+    Fixes incorrectly rounding '9999999999999999' to '10000000000000000'
+    */
+    return programmersLittleHelper[0];
+  }
   let helperTwo = programmersLittleHelper[0].length;
   if (numBtnOrNot && +programmersLittleHelper[1] == 0) {
     if (helperTwo > 9) {
