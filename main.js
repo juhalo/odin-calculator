@@ -22,10 +22,21 @@ function divide(a, b) {
 
 function plusMinus() {
   if (operandTwo) {
-    operandTwo = -operandTwo;
+    let partsOfNumber = operandTwo.split('.');
+    if (partsOfNumber[1]) {
+      //Keeps decimals even if they are only zeroes
+      operandTwo = -partsOfNumber[0] + '.' + partsOfNumber[1];
+    } else {
+      operandTwo = '' + -operandTwo;
+    }
     screen.textContent = operandTwo;
   } else {
-    operandOne = -operandOne;
+    let partsOfNumber = operandOne.split('.');
+    if (partsOfNumber[1]) {
+      operandOne = -partsOfNumber[0] + '.' + partsOfNumber[1];
+    } else {
+      operandOne = '' + -operandOne;
+    }
     screen.textContent = operandOne;
   }
 }
@@ -268,12 +279,14 @@ function roundDown(number, numBtnOrNot) {
     programmersLittleHelper[1].length > 7 &&
     programmersLittleHelper[1].includes('0000000')
   ) {
+    /*
+    Fixes issue with typing '0.00000005' being turned into '0' instead of
+    '0.0000000'
+    */
     programmersLittleHelper[1] = '00000000';
   }
   if (programmersLittleHelper[0] === '9999999999999999') {
-    /*
-    Fixes incorrectly rounding '9999999999999999' to '10000000000000000'
-    */
+    //Fix incorrectly rounding '9999999999999999' to '10000000000000000'
     return programmersLittleHelper[0];
   }
   let helperTwo = programmersLittleHelper[0].length;
