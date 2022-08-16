@@ -113,6 +113,15 @@ function clear() {
 function operate() {
   if (!operator) {
     console.log('105: ' + operandOne);
+    let partsOfNumber = operandOne.split('.');
+    if (partsOfNumber[1] && +partsOfNumber[1] == 0) {
+      /*
+      Removes trailing zeroes with first operand when pressing '='
+      without having an operator.
+      */
+      operandOne = partsOfNumber[0];
+      screen.textContent = operandOne;
+    }
     return; // Fixes issues when pressing '=' as first pressed operator
   }
   if (calculationAgain) {
