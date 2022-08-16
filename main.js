@@ -204,10 +204,12 @@ function clickNumBtn(e) {
       if (operandTwo.indexOf('0') === 0 && operandTwo.indexOf('.') !== 1) {
         operandTwo = +operandTwo;
       }
+      console.log(operandTwo);
       operandTwo = '' + roundDown(operandTwo, true);
       if (operandTwo.includes('e')) {
         operandTwo = '0.000000' + operandTwo[0];
       }
+      console.log(operandTwo);
       screen.textContent = operandTwo;
     }
   }
@@ -261,6 +263,13 @@ function roundDown(number, numBtnOrNot) {
   rounding in one function.
   */
   let programmersLittleHelper = `${number}`.split('.');
+  if (
+    programmersLittleHelper[1] &&
+    programmersLittleHelper[1].length > 7 &&
+    programmersLittleHelper[1].includes('0000000')
+  ) {
+    programmersLittleHelper[1] = '00000000';
+  }
   if (programmersLittleHelper[0] === '9999999999999999') {
     /*
     Fixes incorrectly rounding '9999999999999999' to '10000000000000000'
