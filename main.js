@@ -314,11 +314,20 @@ function roundDown(number, numBtnOrNot) {
     number = Math.floor(number);
     number /= 10 ** helperThree;
   } else {
+    console.log('beforebefore: ' + number);
+    if (('' + +programmersLittleHelper[1]).length == 1) {
+      //let temp = programmersLittleHelper[1].slice(0, -1).length - 5;
+      return number;
+    }
     number *= 10 ** 7;
+    console.log('before: ' + number);
     number = Math.floor(number);
+    console.log('after: ' + number);
     number /= 10 ** 7;
   }
   return number;
 }
+
+function roundNumber(number) {}
 
 main();
